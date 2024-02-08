@@ -1,0 +1,12 @@
+{
+    "general": {
+        "previous_page": "Página nterior",
+        "next_page": "Próxima página",
+        "or": "ou"
+    },
+    "pdf": {
+        "search_for_files": "Procurar por arquivos",
+        "drag_drop_here": "Arraste as imagens e solte aqui",
+        "sign_and_download": "Assinar e baixar"
+    }
+}

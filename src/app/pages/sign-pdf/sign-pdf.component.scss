@@ -1,0 +1,160 @@
+@import "../../../variables.scss";
+
+.sign-pdf {
+    // max-height: calc(100vh - 48px);
+    overflow: hidden;
+
+
+    p {
+        margin: 0;
+    }
+
+    &__drop {
+        width: 450px;
+        height: 200px;
+        // padding: 2rem;
+        text-align: center;
+        border: dashed 1px #979797;
+        position: relative;
+        margin: 0 auto;
+
+        &__title {
+            margin-top: 40px;
+        }
+
+        input {
+            opacity: 0;
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        label {
+            color: $white;
+            width: 183px;
+            height: 44px;
+            border-radius: 21.5px;
+            background-color: $primary;
+            padding: 8px 16px;
+
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            // color: $white;
+        }
+    }
+
+    &__empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    &__doc {
+        margin-top: 16px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__logo {
+            height: 40px;
+            width: 40px;
+            background-color: red;
+            position: absolute;
+            right: 50%;
+            bottom: 60px;
+        }
+
+        &__viewer {
+            position: relative;
+        }
+
+        pdf-viewer {
+            max-height: 70vh;
+            height: 643px;
+            display: flex !important;
+            width: 454px;
+            justify-content: center;
+            align-items: center;
+
+            .page {
+                padding: 0;
+            }
+        }
+    }
+
+    &__hidden {
+        margin-top: 20vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__viewer {
+            position: relative;
+        }
+
+        &__logo {
+            height: 40px;
+            width: 40px;
+            background-color: red;
+            position: absolute;
+            right: 50%;
+            bottom: 30px;
+        }
+
+        pdf-viewer {
+            height: 1024px;
+            display: flex !important;
+            width: 800px;
+            justify-content: center;
+            align-items: center;
+
+            .page {
+                padding: 0;
+            }
+        }
+    }
+
+    &__buttons {
+        height: 36px;
+        margin-top: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+            color: $white;
+        }
+
+        &__num-page {
+            margin: 0 16px;
+
+            h2 {
+                margin: 0;
+            }
+        }
+
+        // app-raised-button {
+        // &:last-child {
+        //     margin-left: 64px;
+        // }
+        // }
+    }
+
+    &__footer {
+        height: 36px;
+        margin-top: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -1,0 +1,8 @@
+<button (click)="click()" [ngClass]="{
+    'button': true,
+    'button__full': type == 'full',
+    'button__square': format == 'square',
+    'button__rounded': format == 'rounded'
+}" [disabled]="disabled" [color]="color" mat-stroked-button>
+    <ng-content></ng-content>
+</button>

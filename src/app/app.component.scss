@@ -1,0 +1,19 @@
+.app {
+    height: 100%;
+
+    &__container {
+        height: 100%;
+
+        &__content {
+            height: 100%;
+
+            &__toolbar {
+                height: 80px;
+            }
+
+            &__router {
+                height: calc(100% - 80px);
+            }
+        }
+    }
+}

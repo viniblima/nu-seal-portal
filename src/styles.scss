@@ -1,1 +1,138 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+@import "./variables.scss";
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$nu-seal-portal-primary: mat.define-palette($md-lightgreen);
+$nu-seal-portal-accent: mat.define-palette($md-darkblue);
+
+// The warn palette is optional (defaults to red).
+$nu-seal-portal-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$nu-seal-portal-theme: mat.define-light-theme((color: (primary: $nu-seal-portal-primary,
+        accent: $nu-seal-portal-accent,
+        warn: $nu-seal-portal-warn,
+      )));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($nu-seal-portal-theme);
+
+@font-face {
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 300;
+  src: url(./assets/fonts/Outfit-Light.ttf);
+}
+
+@font-face {
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 400;
+  src: url(./assets/fonts/Outfit-Regular.ttf);
+}
+
+@font-face {
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 700;
+  src: url(./assets/fonts/Outfit-Bold.ttf);
+}
+
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  font-family: 'Outfit', sans-serif;
+}
+
+body {
+  margin: 0;
+  // font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  .mat-drawer-content {
+    position: relative;
+    z-index: 1;
+    display: block;
+    // height: 100vh;
+    overflow: auto;
+  }
+
+  .ng2-pdf-viewer-container {
+    overflow: hidden;
+    position: unset;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    // width: fit-content !important;
+  }
+
+  .pdfViewer {
+    width: fit-content;
+  }
+
+
+}
+
+.row {
+  display: flex;
+  flex: 1 1 100%;
+  // flex-flow: row wrap;
+  gap: 24px;
+  // justify-content: space-between;
+}
+
+.page {
+  background-color: $white;
+  height: calc(100vh - 80px);
+
+}
+
+.col {
+  &-1 {
+    width: calc(8.33% - 12px);
+  }
+
+  &-2 {
+    width: calc(16.66% - 12px);
+  }
+
+  &-3 {
+    width: calc(25% - 12px);
+  }
+
+  &-4 {
+    width: calc(33% - 12px);
+  }
+
+  &-6 {
+    width: calc(50% - 12px);
+  }
+
+  &-8 {
+    width: calc(66% - 12px);
+  }
+
+  &-9 {
+    width: calc(75% - 12px);
+  }
+
+  &-12 {
+    width: 100%;
+  }
+}
