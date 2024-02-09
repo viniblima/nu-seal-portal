@@ -1,7 +1,22 @@
+@import "../../../variables.scss";
+
 .toolbar {
+  height: 100%;
+  padding: 0 16px;
+  //   background: linear-gradient(270deg, $primary 0%, $secondary 100%);
+  background-color: $secondary;
+  display: flex;
 
+  p {
+    margin: 0;
+  }
 
-    p {
-        margin: 0;
-    }
+  &__init {
+    display: flex;
+    align-items: center;
+  }
+
+  &__menu {
+    color: $white;
+  }
 }
