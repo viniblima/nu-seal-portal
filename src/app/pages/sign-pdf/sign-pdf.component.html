@@ -1,60 +1,94 @@
-<div class="page sign-pdf" [ngClass]="{
+<div
+  class="page sign-pdf"
+  [ngClass]="{
     'page sign-pdf': true,
     'sign-pdf__empty': !havePdf
-}">
-    @if (!havePdf) {
-    <div class="sign-pdf__drop" appDnd (fileDropped)="onFileDropped($event)">
-        <input type="file" #fileDropRef id="fileDropRef" accept=".pdf" (change)="fileBrowseHandler($event)" />
+  }"
+>
+  @if(loading) {
+  <div class="sign-pdf__loading">
+    <mat-spinner></mat-spinner>
+  </div>
+  } @else { @if (!havePdf) { @if(success) {
+  <div class="sign-pdf__success">
+    <mat-icon fontIcon="check_circle" />
+    <h2>{{ "pdf.all_done" | translate }}!</h2>
+    <h3>{{ "pdf.your_file_was_signed" | translate }}</h3>
+    <app-raised-button (click)="reset()">
+      <p>{{ "pdf.send_another" | translate }}</p>
+    </app-raised-button>
+  </div>
+  } @else {
+  <div class="sign-pdf__drop" appDnd (fileDropped)="onFileDropped($event)">
+    <input
+      type="file"
+      #fileDropRef
+      id="fileDropRef"
+      accept=".pdf"
+      (change)="fileBrowseHandler($event)"
+    />
 
-        <h3 class="sign-pdf__drop__title">{{"pdf.drag_drop_here" | translate}}</h3>
-        <h3>{{"general.or" | translate}}</h3>
-        <label for="fileDropRef">{{"pdf.search_for_files" | translate}}</label>
+    <h3 class="sign-pdf__drop__title">
+      {{ "pdf.drag_drop_here" | translate }}
+    </h3>
+    <h3>{{ "general.or" | translate }}</h3>
+    <label for="fileDropRef">{{ "pdf.search_for_files" | translate }}</label>
+  </div>
+  } } @else {
+  <div class="sign-pdf__buttons">
+    <app-raised-button format="square" (click)="previous()">
+      <p>{{ "general.previous_page" | translate }}</p>
+    </app-raised-button>
+    <div class="sign-pdf__buttons__num-page">
+      <h2>{{ currentPage }}</h2>
     </div>
-    } @else {
-    <div class="sign-pdf__buttons">
-        <app-raised-button format="square" (click)="previous()">
-            <p>{{"general.previous_page" | translate}}</p>
-        </app-raised-button>
-        <div class="sign-pdf__buttons__num-page">
-            <h2>{{currentPage}}</h2>
-        </div>
-        <app-raised-button format="square" (click)="next()">
-            <p>{{"general.next_page" | translate}}</p>
-        </app-raised-button>
-
+    <app-raised-button format="square" (click)="next()">
+      <p>{{ "general.next_page" | translate }}</p>
+    </app-raised-button>
+  </div>
+  <div class="sign-pdf__footer">
+    <app-raised-button format="square" (click)="download()" color="accent">
+      <p>{{ "pdf.sign_and_download" | translate }}</p>
+    </app-raised-button>
+  </div>
+  <div class="sign-pdf__doc">
+    <div class="sign-pdf__doc__viewer">
+      <pdf-viewer
+        [src]="pdfSrc"
+        [page]="currentPage"
+        (after-load-complete)="afterLoadComplete($event)"
+        (page-rendered)="pageRendered()"
+        [show-all]="false"
+        [autoresize]="true"
+        [original-size]="true"
+        [fit-to-page]="true"
+        [show-borders]="false"
+        [fit-to-page]="true"
+        [render-text]="false"
+      >
+      </pdf-viewer>
+      <div class="sign-pdf__doc__logo"></div>
     </div>
-    <div class="sign-pdf__footer">
-        <app-raised-button format="square" (click)="download()" color="accent">
-            <p>{{"pdf.sign_and_download" | translate}}</p>
-        </app-raised-button>
-    </div>
-    <div class="sign-pdf__doc">
-        <div class="sign-pdf__doc__viewer">
-            <pdf-viewer [src]="pdfSrc" [page]="currentPage" (after-load-complete)="afterLoadComplete($event)"
-                (page-rendered)="pageRendered()" [show-all]="false" [autoresize]="true" [original-size]='true'
-                [fit-to-page]="true" [show-borders]="false" [fit-to-page]='true' [render-text]='false'>
-            </pdf-viewer>
-            <div class="sign-pdf__doc__logo">
+  </div>
 
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="sign-pdf__hidden">
-        @for (item of pages; track $index) {
-        <div class="sign-pdf__hidden__viewer">
-            <pdf-viewer [src]="pdfSrc" [page]="item+1" [show-all]="false"
-                (after-load-complete)="afterLoadComplete($event)" [autoresize]="true" [original-size]='true'
-                [show-borders]="false" [fit-to-page]='true' [render-text]='false'>
-            </pdf-viewer>
-            <div class="sign-pdf__hidden__logo">
-
-            </div>
-        </div>
-        }
+  <div class="sign-pdf__hidden">
+    @for (item of pages; track $index) {
+    <div class="sign-pdf__hidden__viewer">
+      <pdf-viewer
+        [src]="pdfSrc"
+        [page]="item + 1"
+        [show-all]="false"
+        (after-load-complete)="afterLoadComplete($event)"
+        [autoresize]="true"
+        [original-size]="true"
+        [show-borders]="false"
+        [fit-to-page]="true"
+        [render-text]="false"
+      >
+      </pdf-viewer>
+      <div class="sign-pdf__hidden__logo"></div>
     </div>
     }
-
+  </div>
+  } }
 </div>

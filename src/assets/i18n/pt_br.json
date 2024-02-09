@@ -7,6 +7,9 @@
     "pdf": {
         "search_for_files": "Procurar por arquivos",
         "drag_drop_here": "Arraste as imagens e solte aqui",
-        "sign_and_download": "Assinar e baixar"
+        "sign_and_download": "Assinar e baixar",
+        "all_done": "Tudo certo",
+        "your_file_was_signed": "Seu arquivo foi assinado e logo será baixado",
+        "send_another": "Enviar outro"
     }
 }
