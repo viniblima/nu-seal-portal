@@ -3,6 +3,7 @@ import jsPDF from 'jspdf';
 import { PDFDocumentProxy, PdfViewerComponent } from 'ng2-pdf-viewer';
 import html2canvas from 'html2canvas';
 import { UploadService } from '../../services/upload.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-pdf',
@@ -22,11 +23,16 @@ export class SignPdfComponent {
     orientation: 'portrait',
   });
 
+  form: FormGroup = new FormGroup({
+    posicaoHorizontal: new FormControl('left', [Validators.required]),
+    posicaoVertical: new FormControl('down', [Validators.required]),
+  })
+
   @ViewChild(PdfViewerComponent, { static: false }) pdfComponent:
     | PdfViewerComponent
     | undefined;
 
-  constructor(private uploadService: UploadService) {}
+  constructor(private uploadService: UploadService) { }
 
   onFileDropped(event: FileList) {
     this.renderDoc(event);

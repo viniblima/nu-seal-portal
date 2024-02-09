@@ -1,10 +1,7 @@
-<div
-  class="page sign-pdf"
-  [ngClass]="{
+<div class="page sign-pdf" [ngClass]="{
     'page sign-pdf': true,
     'sign-pdf__empty': !havePdf
-  }"
->
+  }">
   @if(loading) {
   <div class="sign-pdf__loading">
     <mat-spinner></mat-spinner>
@@ -20,13 +17,7 @@
   </div>
   } @else {
   <div class="sign-pdf__drop" appDnd (fileDropped)="onFileDropped($event)">
-    <input
-      type="file"
-      #fileDropRef
-      id="fileDropRef"
-      accept=".pdf"
-      (change)="fileBrowseHandler($event)"
-    />
+    <input type="file" #fileDropRef id="fileDropRef" accept=".pdf" (change)="fileBrowseHandler($event)" />
 
     <h3 class="sign-pdf__drop__title">
       {{ "pdf.drag_drop_here" | translate }}
@@ -45,6 +36,45 @@
     <app-raised-button format="square" (click)="next()">
       <p>{{ "general.next_page" | translate }}</p>
     </app-raised-button>
+
+
+
+  </div>
+  <div class="sign-pdf__buttons">
+    <form [formGroup]="form">
+
+
+      <mat-form-field appearance="outline" class="">
+        <mat-label>{{ "pdf.position_horizontal" | translate }}</mat-label>
+        <mat-select formControlName="posicaoHorizontal">
+          <mat-option value="left">{{
+            "general.left" | translate
+            }}</mat-option>
+          <mat-option value="center">{{
+            "general.center" | translate
+            }}</mat-option>
+          <mat-option value="right">{{
+            "general.right" | translate
+            }}</mat-option>
+        </mat-select>
+
+
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="">
+        <mat-label>{{ "pdf.position_vertical" | translate }}</mat-label>
+        <mat-select formControlName="posicaoVertical">
+          <mat-option value="up">{{
+            "general.up" | translate
+            }}</mat-option>
+          <mat-option value="center">{{
+            "general.center" | translate
+            }}</mat-option>
+          <mat-option value="down">{{
+            "general.down" | translate
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
   </div>
   <div class="sign-pdf__footer">
     <app-raised-button format="square" (click)="download()" color="accent">
@@ -53,40 +83,43 @@
   </div>
   <div class="sign-pdf__doc">
     <div class="sign-pdf__doc__viewer">
-      <pdf-viewer
-        [src]="pdfSrc"
-        [page]="currentPage"
-        (after-load-complete)="afterLoadComplete($event)"
-        (page-rendered)="pageRendered()"
-        [show-all]="false"
-        [autoresize]="true"
-        [original-size]="true"
-        [fit-to-page]="true"
-        [show-borders]="false"
-        [fit-to-page]="true"
-        [render-text]="false"
-      >
+      <pdf-viewer [src]="pdfSrc" [page]="currentPage" (after-load-complete)="afterLoadComplete($event)"
+        (page-rendered)="pageRendered()" [show-all]="false" [autoresize]="true" [original-size]="true"
+        [fit-to-page]="true" [show-borders]="false" [fit-to-page]="true" [render-text]="false">
       </pdf-viewer>
-      <div class="sign-pdf__doc__logo"></div>
+      <div [ngClass]="{
+        'sign-pdf__doc__logo': true,
+        'sign-pdf__doc__logo__hr': form.controls['posicaoHorizontal'].value == 'right',
+        'sign-pdf__doc__logo__hl': form.controls['posicaoHorizontal'].value == 'left',
+        'sign-pdf__doc__logo__hc': form.controls['posicaoHorizontal'].value == 'center',
+
+        'sign-pdf__doc__logo__vu': form.controls['posicaoVertical'].value == 'up',
+        'sign-pdf__doc__logo__vd': form.controls['posicaoVertical'].value == 'down',
+        'sign-pdf__doc__logo__vc': form.controls['posicaoVertical'].value == 'center',
+      }">
+        <img src="../../../assets/images/selo.jpeg" />
+      </div>
     </div>
   </div>
 
   <div class="sign-pdf__hidden">
     @for (item of pages; track $index) {
     <div class="sign-pdf__hidden__viewer">
-      <pdf-viewer
-        [src]="pdfSrc"
-        [page]="item + 1"
-        [show-all]="false"
-        (after-load-complete)="afterLoadComplete($event)"
-        [autoresize]="true"
-        [original-size]="true"
-        [show-borders]="false"
-        [fit-to-page]="true"
-        [render-text]="false"
-      >
+      <pdf-viewer [src]="pdfSrc" [page]="item + 1" [show-all]="false" (after-load-complete)="afterLoadComplete($event)"
+        [autoresize]="true" [original-size]="true" [show-borders]="false" [fit-to-page]="true" [render-text]="false">
       </pdf-viewer>
-      <div class="sign-pdf__hidden__logo"></div>
+      <div [ngClass]="{
+        'sign-pdf__hidden__logo': true,
+        'sign-pdf__hidden__logo__hr': form.controls['posicaoHorizontal'].value == 'right',
+        'sign-pdf__hidden__logo__hl': form.controls['posicaoHorizontal'].value == 'left',
+        'sign-pdf__hidden__logo__hc': form.controls['posicaoHorizontal'].value == 'center',
+
+        'sign-pdf__hidden__logo__vu': form.controls['posicaoVertical'].value == 'up',
+        'sign-pdf__hidden__logo__vd': form.controls['posicaoVertical'].value == 'down',
+        'sign-pdf__hidden__logo__vc': form.controls['posicaoVertical'].value == 'center',
+      }">
+        <img src="../../../assets/images/selo.jpeg" />
+      </div>
     </div>
     }
   </div>

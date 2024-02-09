@@ -11,6 +11,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     ToolbarComponent,
@@ -23,11 +26,15 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     MatSidenavModule,
     PdfViewerModule,
+    MatFormFieldModule,
     MatButtonModule,
     CommonModule,
     TranslateModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     MatSidenavModule,
@@ -39,7 +46,11 @@ import { MatIconModule } from '@angular/material/icon';
     StrokedButtonComponent,
     TranslateModule,
     MatProgressSpinnerModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

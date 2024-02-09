@@ -74,8 +74,37 @@
       width: 40px;
       background-color: red;
       position: absolute;
-      right: 50%;
-      bottom: 60px;
+
+      &__hr {
+        right: 10%;
+      }
+
+      &__hl {
+        right: 50%;
+      }
+
+      &__hc {
+        right: 90%;
+      }
+
+      &__vu {
+        bottom: unset;
+        top: 60px;
+      }
+
+      &__vd {
+        bottom: 60px;
+      }
+
+      &__vc {
+        bottom: 50%;
+      }
+
+
+
+      img {
+        height: 40px;
+      }
     }
 
     &__viewer {
@@ -112,8 +141,25 @@
       width: 40px;
       background-color: red;
       position: absolute;
-      right: 50%;
+
+      &__hr {
+        right: 10%;
+      }
+
+      &__hl {
+        right: 50%;
+      }
+
+      &__hc {
+        right: 90%;
+      }
+
+      // right: 50%;
       bottom: 30px;
+
+      img {
+        height: 40px;
+      }
     }
 
     pdf-viewer {
@@ -146,6 +192,10 @@
       h2 {
         margin: 0;
       }
+    }
+
+    mat-form-field {
+      margin: 0 16px;
     }
 
     // app-raised-button {
