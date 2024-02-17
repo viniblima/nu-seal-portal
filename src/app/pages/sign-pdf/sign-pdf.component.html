@@ -52,7 +52,7 @@
             <qrcode [qrdata]="qrLink" [allowEmptyString]="true"
               [ariaLabel]="'QR Code image with the following content...'" [cssClass]="'center'"
               [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [errorCorrectionLevel]="'M'" [imageHeight]="8"
-              [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'" [width]="10"></qrcode>
+              [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'" [width]="5"></qrcode>
           </div>
           <div [ngClass]="{
             'sign-pdf__doc__image': true,
@@ -200,9 +200,9 @@
         'sign-pdf__hidden__qr__vd': form.controls['posicaoVertical'].value == 'down',
       }">
         <qrcode [qrdata]="qrLink" [allowEmptyString]="true" [ariaLabel]="'QR Code image with the following content...'"
-          [cssClass]="'center'" [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [elementType]="'canvas'"
-          [errorCorrectionLevel]="'M'" [imageHeight]="12" [imageWidth]="12" [margin]="4" [scale]="1"
-          [title]="'A custom title attribute'" [width]="60"></qrcode>
+          [cssClass]="'center'" [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [errorCorrectionLevel]="'M'"
+          [imageHeight]="8" [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'" [width]="5">
+        </qrcode>
       </div>
       <div [ngClass]="{
         'sign-pdf__hidden__image': true,
