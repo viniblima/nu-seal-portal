@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class UploadService {
-  constructor(private httpGlobalService: HttpGlobalService) {}
+  constructor(private httpGlobalService: HttpGlobalService) { }
 
   /**
    * Upload de arquivos
@@ -11,10 +11,10 @@ export class UploadService {
    * @param file Arquivo à ser enviado
    * @returns Requisicao HTTP com lista de uploads
    */
-  upload(file: File): Promise<Object> {
+  upload(file: any, idSeal: string): Promise<Object> {
     const formData: any = new FormData();
     formData.append('file', file);
-    return this.httpGlobalService.httpPost('portal/upload', formData);
+    return this.httpGlobalService.httpPost(`portal/upload/${idSeal}`, formData);
   }
 
   /**

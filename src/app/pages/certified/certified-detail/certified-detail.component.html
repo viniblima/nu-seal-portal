@@ -1,0 +1,50 @@
+<div class="certified-detail page">
+    @if(loading) {
+    <div class="certified-detail__loading">
+        <mat-spinner></mat-spinner>
+    </div>
+    } @else {
+    <div class="row">
+        <div class="col-6">
+            <div class="certified-detail__info">
+                <div class="certified-detail__info__main">
+                    <h1>
+                        {{"general.certificate" | translate}}
+                    </h1>
+                    <p>{{seal.id}}</p>
+                    <p>{{seal.createdAt.toLocaleDateString()}}</p>
+                </div>
+
+                <div class="certified-detail__info__valid">
+                    <mat-icon fontIcon="check_circle" *ngIf="seal.isValid" />
+                    <mat-icon fontIcon="cancel" *ngIf="!seal.isValid" />
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-6">
+            <div [ngClass]="{
+                'certified-detail__timeline': true,
+                'certified-detail__timeline__success': seal.isValid,
+                'certified-detail__timeline__error': !seal.isValid
+            }" class="certified-detail__timeline">
+                <div class="certified-detail__timeline__items">
+                    <p><mat-icon fontIcon="check"></mat-icon> {{"seal.issued" | translate}} {{"seal.on" | translate}}
+                        {{seal.createdAt.toLocaleDateString()}}
+                    </p>
+                    <p><mat-icon fontIcon="check"></mat-icon>{{"seal.issued" | translate}} {{"seal.on" | translate}} Nu
+                        Seal</p>
+                    <p><mat-icon fontIcon="check"></mat-icon>{{"seal.validated" | translate}} {{"seal.on" | translate}}
+                        {{seal.updatedAt.toLocaleDateString()}}
+                    </p>
+                    <h3 *ngIf="seal.isValid"><mat-icon fontIcon="check"></mat-icon>{{"seal.valid" | translate}}</h3>
+                    <h3 *ngIf="!seal.isValid"><mat-icon fontIcon="close"></mat-icon>{{"seal.invalid" | translate}}</h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    }
+
+</div>

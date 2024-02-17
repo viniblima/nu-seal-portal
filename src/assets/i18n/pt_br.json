@@ -7,16 +7,36 @@
         "center": "Centro",
         "right": "Direita",
         "up": "Cima",
-        "down": "Baixo"
+        "down": "Baixo",
+        "image": "Imagem",
+        "text": "Texto",
+        "certificate": "Certificado",
+        "search": "Pesquisar"
     },
     "pdf": {
         "search_for_files": "Procurar por arquivos",
         "drag_drop_here": "Arraste as imagens e solte aqui",
         "sign_and_download": "Assinar e baixar",
+        "apply_seal": "Aplicar Selo",
         "all_done": "Tudo certo",
         "your_file_was_signed": "Seu arquivo foi assinado e logo será baixado",
         "send_another": "Enviar outro",
         "position_horizontal": "Posição horizontal",
-        "position_vertical": "Posição vertical"
+        "seal_position": "Posição do selo",
+        "position_vertical": "Posição vertical",
+        "pages": "Páginas",
+        "view_page": "Visualizar página",
+        "seal_type": "Tipo de selo",
+        "select_img": "Selecionar a imagem",
+        "applying_seal_on_page": "Aplicando selo na página",
+        "this_seal_only_will_be_valid_when_applyed": "Este selo será válido somente se for aplicado"
+    },
+    "seal": {
+        "issued": "Emitido",
+        "valid": "Válido",
+        "invalid": "Inválido",
+        "on": "em",
+        "validated": "Validado",
+        "num_or_id_seal": "Número/ ID do selo"
     }
 }

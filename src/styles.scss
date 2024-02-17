@@ -79,7 +79,10 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    // width: fit-content !important;
+    width: fit-content !important;
+    height: fit-content !important;
+    max-width: 75vw;
+    max-height: 75vh;
   }
 
   .pdfViewer {

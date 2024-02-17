@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start" : "node server.js",
+    "start": "node server.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "heroku-postbuild": "ng build -c production"
+    "heroku-postbuild": "ng build -c production",
+    "start-local": "ng serve"
   },
   "private": true,
   "engines": {
@@ -26,6 +27,7 @@
     "@angular/router": "^17.1.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "angularx-qrcode": "^17.0.0",
     "express": "^4.18.2",
     "jspdf": "^2.5.1",
     "ng2-pdf-viewer": "^10.0.0",

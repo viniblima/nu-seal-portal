@@ -1,0 +1,84 @@
+@import "../../../../variables.scss";
+
+
+.certified-detail {
+    .row {
+        height: 100%;
+
+        @media (max-width: 1024px) {
+            flex-direction: column;
+        }
+    }
+
+    .col-6 {
+        @media (max-width: 1024px) {
+            width: 100%;
+            height: calc(50% - 12px);
+        }
+    }
+
+    &__info {
+        &__main {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        }
+
+        &__valid {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .mat-icon {
+                font-size: 80px;
+                height: 80px;
+                width: 80px;
+            }
+        }
+    }
+
+    &__loading {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__info {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__timeline {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+
+
+        &__success {
+            background-color: $primary;
+        }
+
+        &__error {
+            background-color: $error;
+        }
+
+        p,
+        h3 {
+            display: flex;
+        }
+
+        .mat-icon {
+            margin-right: 32px;
+        }
+    }
+}

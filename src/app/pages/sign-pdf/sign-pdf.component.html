@@ -2,11 +2,13 @@
     'page sign-pdf': true,
     'sign-pdf__empty': !havePdf
   }">
-  @if(loading) {
+  @if (initializingPage) {
   <div class="sign-pdf__loading">
     <mat-spinner></mat-spinner>
   </div>
-  } @else { @if (!havePdf) { @if(success) {
+  } @else {
+  @if (!havePdf) {
+  @if(success) {
   <div class="sign-pdf__success">
     <mat-icon fontIcon="check_circle" />
     <h2>{{ "pdf.all_done" | translate }}!</h2>
@@ -26,102 +28,210 @@
     <label for="fileDropRef">{{ "pdf.search_for_files" | translate }}</label>
   </div>
   } } @else {
-  <div class="sign-pdf__buttons">
-    <app-raised-button format="square" (click)="previous()">
-      <p>{{ "general.previous_page" | translate }}</p>
-    </app-raised-button>
-    <div class="sign-pdf__buttons__num-page">
-      <h2>{{ currentPage }}</h2>
-    </div>
-    <app-raised-button format="square" (click)="next()">
-      <p>{{ "general.next_page" | translate }}</p>
-    </app-raised-button>
-
-
-
+  @if(loading) {
+  <div class="sign-pdf__loading">
+    <mat-spinner></mat-spinner>
+    <p>{{ "pdf.applying_seal_on_page" | translate}} {{indexPage}}/{{totalPages}}</p>
   </div>
-  <div class="sign-pdf__buttons">
-    <form [formGroup]="form">
+  } @else {
+  <div class="row">
+    <div class="col-8">
+      <div class="sign-pdf__doc">
+        <div class="sign-pdf__doc__viewer">
+          <pdf-viewer [src]="pdfSrc" [page]="form.controls['pagina'].value"
+            [class.sign-pdf__doc__viewer__relative]="positionPdfViewerRelative"
+            (after-load-complete)="afterLoadComplete($event)" (page-rendered)="pageRendered()" [show-all]="false"
+            [autoresize]="true" [original-size]="false" [show-borders]="false" [fit-to-page]="true"
+            [render-text]="false">
+          </pdf-viewer>
+          <div [ngClass]="{
+            'sign-pdf__doc__qr': true,
+            'sign-pdf__doc__qr__vu': form.controls['posicaoVertical'].value == 'up',
+            'sign-pdf__doc__qr__vd': form.controls['posicaoVertical'].value == 'down',
+          }">
+            <qrcode [qrdata]="qrLink" [allowEmptyString]="true"
+              [ariaLabel]="'QR Code image with the following content...'" [cssClass]="'center'"
+              [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [elementType]="'canvas'" [errorCorrectionLevel]="'M'"
+              [imageHeight]="8" [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'"
+              [width]="40"></qrcode>
+          </div>
+          <div [ngClass]="{
+            'sign-pdf__doc__image': true,
+            'sign-pdf__doc__image__hr': form.controls['posicaoHorizontal'].value == 'right',
+            'sign-pdf__doc__image__hl': form.controls['posicaoHorizontal'].value == 'left',
+            'sign-pdf__doc__image__hc': form.controls['posicaoHorizontal'].value == 'center',
+    
+            'sign-pdf__doc__image__vu': form.controls['posicaoVertical'].value == 'up',
+            'sign-pdf__doc__image__vd': form.controls['posicaoVertical'].value == 'down',
+            'sign-pdf__doc__image__vc': form.controls['posicaoVertical'].value == 'center',
+          }" *ngIf="form.controls['tipoSelo'].value == 'image'">
+            <img [src]="sealSrc != '' ? sealSrc : '../../../assets/images/selo.jpeg'" />
+            <p>N. {{seal.numSealText}}</p>
+          </div>
 
+          <div [ngClass]="{
+              'sign-pdf__doc__seal-txt': true,      
+              'sign-pdf__doc__seal-txt__vu': form.controls['posicaoVertical'].value == 'up',
+              'sign-pdf__doc__seal-txt__vd': form.controls['posicaoVertical'].value == 'down',
+            }" *ngIf="form.controls['tipoSelo'].value == 'text'">
+            <p>{{sealText}}</p>
+          </div>
 
-      <mat-form-field appearance="outline" class="">
-        <mat-label>{{ "pdf.position_horizontal" | translate }}</mat-label>
-        <mat-select formControlName="posicaoHorizontal">
-          <mat-option value="left">{{
-            "general.left" | translate
-            }}</mat-option>
-          <mat-option value="center">{{
-            "general.center" | translate
-            }}</mat-option>
-          <mat-option value="right">{{
-            "general.right" | translate
-            }}</mat-option>
-        </mat-select>
-
-
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="">
-        <mat-label>{{ "pdf.position_vertical" | translate }}</mat-label>
-        <mat-select formControlName="posicaoVertical">
-          <mat-option value="up">{{
-            "general.up" | translate
-            }}</mat-option>
-          <mat-option value="center">{{
-            "general.center" | translate
-            }}</mat-option>
-          <mat-option value="down">{{
-            "general.down" | translate
-            }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
-  </div>
-  <div class="sign-pdf__footer">
-    <app-raised-button format="square" (click)="download()" color="accent">
-      <p>{{ "pdf.sign_and_download" | translate }}</p>
-    </app-raised-button>
-  </div>
-  <div class="sign-pdf__doc">
-    <div class="sign-pdf__doc__viewer">
-      <pdf-viewer [src]="pdfSrc" [page]="currentPage" (after-load-complete)="afterLoadComplete($event)"
-        (page-rendered)="pageRendered()" [show-all]="false" [autoresize]="true" [original-size]="true"
-        [fit-to-page]="true" [show-borders]="false" [fit-to-page]="true" [render-text]="false">
-      </pdf-viewer>
-      <div [ngClass]="{
-        'sign-pdf__doc__logo': true,
-        'sign-pdf__doc__logo__hr': form.controls['posicaoHorizontal'].value == 'right',
-        'sign-pdf__doc__logo__hl': form.controls['posicaoHorizontal'].value == 'left',
-        'sign-pdf__doc__logo__hc': form.controls['posicaoHorizontal'].value == 'center',
-
-        'sign-pdf__doc__logo__vu': form.controls['posicaoVertical'].value == 'up',
-        'sign-pdf__doc__logo__vd': form.controls['posicaoVertical'].value == 'down',
-        'sign-pdf__doc__logo__vc': form.controls['posicaoVertical'].value == 'center',
-      }">
-        <img src="../../../assets/images/selo.jpeg" />
+        </div>
       </div>
     </div>
-  </div>
+    <div class="col-4 sign-pdf__menu">
+      <form [formGroup]="form">
+        <div class="sign-pdf__menu__section">
+          <h4>
+            {{"pdf.pages" | translate}}
+          </h4>
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>{{ "pdf.view_page" | translate }}</mat-label>
+            <mat-select formControlName="pagina">
+              @for (item of [].constructor(totalPages); track $index;) {
+              <mat-option [value]="$index+1">{{$index + 1}}</mat-option>
+              }
 
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="sign-pdf__menu__section">
+          <h4>
+            {{"pdf.seal_position" | translate}}
+          </h4>
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>{{ "pdf.position_horizontal" | translate }}</mat-label>
+            <mat-select formControlName="posicaoHorizontal">
+              <mat-option value="left">{{
+                "general.left" | translate
+                }}</mat-option>
+              <mat-option value="center">{{
+                "general.center" | translate
+                }}</mat-option>
+              <mat-option value="right">{{
+                "general.right" | translate
+                }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>{{ "pdf.position_vertical" | translate }}</mat-label>
+            <mat-select formControlName="posicaoVertical">
+              <mat-option value="up">{{
+                "general.up" | translate
+                }}</mat-option>
+              <mat-option [disabled]="form.controls['tipoSelo'].value == 'text'" value="center">{{
+                "general.center" | translate
+                }}</mat-option>
+              <mat-option value="down">{{
+                "general.down" | translate
+                }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="sign-pdf__menu__section">
+          <h4>
+            {{"pdf.seal_type" | translate}}
+          </h4>
+          <mat-button-toggle-group name="fontStyle" formControlName="tipoSelo">
+            <mat-button-toggle value="image">{{ 'general.image' | translate }}</mat-button-toggle>
+            <mat-button-toggle value="text">{{ 'general.text' | translate }}</mat-button-toggle>
+          </mat-button-toggle-group>
+          <div class="sign-pdf__img-seal">
+            @if (form.controls['tipoSelo'].value == "image") {
+
+            <div class="sign-pdf__img-seal__img">
+              <app-raised-button format="square" color="accent">
+                <input type="file" #fileDropRef id="fileSealDropRef" (change)="sealBrowsehandler($event)" />
+                <label for="fileSealDropRef">{{ "pdf.select_img" | translate }}</label>
+              </app-raised-button>
+
+              @if (sealSrc != "") {
+              <p>{{sealImageName}}</p>
+              }
+            </div>
+
+
+            } @else if(form.controls['tipoSelo'].value == "text") {
+            <div class="sign-pdf__img-seal__text">
+              <p>"{{sealText}}"</p>
+            </div>
+            }
+          </div>
+        </div>
+
+
+
+        <div class="sign-pdf__footer">
+          <app-raised-button format="square" (onClick)="download()" color="accent"
+            [disabled]="form.controls['tipoSelo'].value == 'image' && sealSrc == '' ">
+            <p>{{ "pdf.apply_seal" | translate }}</p>
+          </app-raised-button>
+        </div>
+        <div class="sign-pdf__warning">
+          <p>{{"pdf.this_seal_only_will_be_valid_when_applyed" | translate}}</p>
+        </div>
+
+      </form>
+    </div>
+    <div class="sign-pdf__footer-mobile">
+      <app-raised-button format="square" (onClick)="download()" color="accent"
+        [disabled]="form.controls['tipoSelo'].value == 'image' && sealSrc == '' ">
+        <p>{{ "pdf.apply_seal" | translate }}</p>
+      </app-raised-button>
+      <p>{{"pdf.this_seal_only_will_be_valid_when_applyed" | translate}}</p>
+    </div>
+  </div>
+  }
   <div class="sign-pdf__hidden">
-    @for (item of pages; track $index) {
+    @for (item of [].constructor(totalPages); track $index) {
+    <!-- <div class="row">
+      <div class="col-8"> -->
     <div class="sign-pdf__hidden__viewer">
-      <pdf-viewer [src]="pdfSrc" [page]="item + 1" [show-all]="false" (after-load-complete)="afterLoadComplete($event)"
-        [autoresize]="true" [original-size]="true" [show-borders]="false" [fit-to-page]="true" [render-text]="false">
+      <pdf-viewer [src]="pdfSrc" [page]="$index+1" id="viewer_hidden_{{$index}}"
+        [class.sign-pdf__hidden__viewer__relative]="positionPdfHiddenRelative" [show-all]="false"
+        (after-load-complete)="afterHiddenLoadComplete($event)" [original-size]="false" [show-borders]="false"
+        [fit-to-page]="true" [render-text]="false">
       </pdf-viewer>
       <div [ngClass]="{
-        'sign-pdf__hidden__logo': true,
-        'sign-pdf__hidden__logo__hr': form.controls['posicaoHorizontal'].value == 'right',
-        'sign-pdf__hidden__logo__hl': form.controls['posicaoHorizontal'].value == 'left',
-        'sign-pdf__hidden__logo__hc': form.controls['posicaoHorizontal'].value == 'center',
-
-        'sign-pdf__hidden__logo__vu': form.controls['posicaoVertical'].value == 'up',
-        'sign-pdf__hidden__logo__vd': form.controls['posicaoVertical'].value == 'down',
-        'sign-pdf__hidden__logo__vc': form.controls['posicaoVertical'].value == 'center',
+        'sign-pdf__hidden__qr': true,
+        'sign-pdf__hidden__qr__vu': form.controls['posicaoVertical'].value == 'up',
+        'sign-pdf__hidden__qr__vd': form.controls['posicaoVertical'].value == 'down',
       }">
-        <img src="../../../assets/images/selo.jpeg" />
+        <qrcode [qrdata]="qrLink" [allowEmptyString]="true" [ariaLabel]="'QR Code image with the following content...'"
+          [cssClass]="'center'" [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [elementType]="'canvas'"
+          [errorCorrectionLevel]="'M'" [imageHeight]="12" [imageWidth]="12" [margin]="4" [scale]="1"
+          [title]="'A custom title attribute'" [width]="60"></qrcode>
+      </div>
+      <div [ngClass]="{
+        'sign-pdf__hidden__image': true,
+        'sign-pdf__hidden__image__hr': form.controls['posicaoHorizontal'].value == 'right',
+        'sign-pdf__hidden__image__hl': form.controls['posicaoHorizontal'].value == 'left',
+        'sign-pdf__hidden__image__hc': form.controls['posicaoHorizontal'].value == 'center',
+
+        'sign-pdf__hidden__image__vu': form.controls['posicaoVertical'].value == 'up',
+        'sign-pdf__hidden__image__vd': form.controls['posicaoVertical'].value == 'down',
+        'sign-pdf__hidden__image__vc': form.controls['posicaoVertical'].value == 'center',
+      }" *ngIf="form.controls['tipoSelo'].value == 'image'">
+        <img [src]="sealSrc" />
+        <p>N. {{seal.numSealText}}</p>
+      </div>
+
+      <div [ngClass]="{
+          'sign-pdf__hidden__seal-txt': true,      
+          'sign-pdf__hidden__seal-txt__vu': form.controls['posicaoVertical'].value == 'up',
+          'sign-pdf__hidden__seal-txt__vd': form.controls['posicaoVertical'].value == 'down',
+          'sign-pdf__hidden__seal-txt__vc': form.controls['posicaoVertical'].value == 'center',
+        }" *ngIf="form.controls['tipoSelo'].value == 'text'">
+        <p>{{sealText}}</p>
       </div>
     </div>
+    <!-- </div>
+    </div> -->
+
     }
   </div>
-  } }
+  }}
 </div>

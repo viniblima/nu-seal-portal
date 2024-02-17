@@ -1,6 +1,19 @@
 .app {
     height: 100%;
 
+
+    &__desktop {
+        @media (max-width: 1024px) {
+            display: none;
+        }
+    }
+
+    &__mobile {
+        @media (min-width: 1025px) {
+            display: none;
+        }
+    }
+
     &__container {
         height: 100%;
 

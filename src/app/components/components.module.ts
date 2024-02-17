@@ -14,6 +14,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { QRCodeModule } from 'angularx-qrcode';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     ToolbarComponent,
@@ -35,6 +40,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTabsModule,
+    QRCodeModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatInputModule
   ],
   exports: [
     MatSidenavModule,
@@ -51,6 +61,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTabsModule,
+    MatCardModule,
+    MatButtonToggleModule,
+    QRCodeModule,
+    MatInputModule
   ],
 })
 export class ComponentsModule { }

@@ -1,0 +1,17 @@
+<div class="certified page">
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="form">
+                <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>{{ "seal.num_or_id_seal" | translate }}</mat-label>
+                    <input matInput type="text" formControlName="numSelo" />
+                </mat-form-field>
+
+                <app-raised-button format="square" (onClick)="search()" color="accent"
+                    [disabled]="form.controls['numSelo'].value == ''">
+                    <p>{{ "general.search" | translate }}</p>
+                </app-raised-button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

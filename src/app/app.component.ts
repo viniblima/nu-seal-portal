@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private sideNavService: SideNavService,
   ) { }
 
+
   ngOnInit(): void {
     this.subscriptionOpen = this.sideNavService.openedObs.subscribe(data => this.opened);
   }

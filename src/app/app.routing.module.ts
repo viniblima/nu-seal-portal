@@ -11,6 +11,10 @@ export const routes: Routes = [
     {
         path: 'sign-pdf',
         loadChildren: () => import('./pages/sign-pdf/sign-pdf.module').then(m => m.SignPdfModule),
+    },
+    {
+        path: 'certified',
+        loadChildren: () => import('./pages/certified/certified.module').then(m => m.CertifiedModule),
     }
 ];
 

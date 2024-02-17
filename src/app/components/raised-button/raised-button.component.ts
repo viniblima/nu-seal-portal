@@ -17,6 +17,9 @@ export class RaisedButtonComponent {
   @Input() color: 'primary' | 'accent' | 'warn' = 'primary';
 
   click() {
+    if (this.disabled) {
+      return;
+    }
     this.onClick.emit();
   }
 }
