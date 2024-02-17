@@ -210,15 +210,27 @@
       &__vu {
         bottom: unset;
         top: 20px;
+
+        @media (max-width: 1024px) {
+          top: 5px;
+        }
       }
 
       &__vd {
         bottom: 20px;
+
+        @media (max-width: 1024px) {
+          bottom: 5px;
+        }
       }
 
       p {
         font-size: 10px;
         text-align: center;
+
+        @media (max-width: 1024px) {
+          font-size: 6px;
+        }
       }
     }
 
@@ -490,7 +502,14 @@
       }
     }
 
-
+    &__text {
+      @media (max-width: 1024px) {
+        p {
+          margin-top: 12px;
+          font-size: 12px;
+        }
+      }
+    }
   }
 
   @media (max-width: 1024px) {

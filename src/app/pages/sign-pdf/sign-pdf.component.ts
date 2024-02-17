@@ -70,7 +70,7 @@ export class SignPdfComponent {
     });
     this.sealService.getNumber().then((data: any) => {
       this.seal = new Seal(data.seal);
-      this.sealText = `Este documento utiliza o selo digital nº ${this.seal.numSealText} emitido em ${Date.now().toLocaleString()}. Para verificar autenticidade acesso site https://nu-seal-portal-92c11adb828d.herokuapp.com/sign-pdf informe o número do selo`;
+      this.sealText = `Este documento utiliza o selo digital nº ${this.seal.numSealText} emitido em ${Date.now().toLocaleString()}. Para verificar autenticidade acesso site ${window.location.href.replace("sign-pdf", `certified/${this.seal.numSeal}`)} informe o número do selo`;
 
       qrcode.toDataURL(`${window.location.href.replace("sign-pdf", `certified/${this.seal.numSeal}`)}`, (err, url) => {
         this.qrLink = url;
