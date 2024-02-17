@@ -51,9 +51,8 @@
           }">
             <qrcode [qrdata]="qrLink" [allowEmptyString]="true"
               [ariaLabel]="'QR Code image with the following content...'" [cssClass]="'center'"
-              [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [elementType]="'canvas'" [errorCorrectionLevel]="'M'"
-              [imageHeight]="8" [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'"
-              [width]="40"></qrcode>
+              [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [errorCorrectionLevel]="'M'" [imageHeight]="8"
+              [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'" [width]="10"></qrcode>
           </div>
           <div [ngClass]="{
             'sign-pdf__doc__image': true,
@@ -181,7 +180,7 @@
         [disabled]="form.controls['tipoSelo'].value == 'image' && sealSrc == '' ">
         <p>{{ "pdf.apply_seal" | translate }}</p>
       </app-raised-button>
-      <p>{{"pdf.this_seal_only_will_be_valid_when_applyed" | translate}}</p>
+      <p class="sign-pdf__warning">{{"pdf.this_seal_only_will_be_valid_when_applyed" | translate}}</p>
     </div>
   </div>
   }
