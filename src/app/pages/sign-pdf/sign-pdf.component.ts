@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PagePdfInterface, Seal } from '../../models';
 import { SealService } from '../../services/seal.service';
 import { Subscription } from 'rxjs';
+import * as qrcode from 'qrcode';
 
 @Component({
   selector: 'app-sign-pdf',
@@ -59,9 +60,7 @@ export class SignPdfComponent {
   }
 
   ngOnInit(): void {
-    console.log(window.location.href);
     this.subscriptionTipoSelo = this.form.get("tipoSelo")!.valueChanges.subscribe((data) => {
-      console.log(data)
       if (data == "text") {
         this.form.get("posicaoHorizontal")!.disable();
         this.form.controls["posicaoVertical"].setValue("down");
@@ -72,7 +71,10 @@ export class SignPdfComponent {
     this.sealService.getNumber().then((data: any) => {
       this.seal = new Seal(data.seal);
       this.sealText = `Este documento utiliza o selo digital nº ${this.seal.numSealText} emitido em ${Date.now().toLocaleString()}. Para verificar autenticidade acesso site https://nu-seal-portal-92c11adb828d.herokuapp.com/sign-pdf informe o número do selo`;
-      this.qrLink = `${window.location.href.replace("sign-pdf", `certified/${this.seal.numSeal}`)}`
+
+      qrcode.toDataURL(`${window.location.href.replace("sign-pdf", `certified/${this.seal.numSeal}`)}`, (err, url) => {
+        this.qrLink = url;
+      })
       this.initializingPage = false;
     })
 

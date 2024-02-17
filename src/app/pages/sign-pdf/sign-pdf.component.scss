@@ -143,10 +143,9 @@
       position: absolute;
       left: 10px;
 
-
-      canvas {
-        max-width: 40px;
-        max-height: 40px;
+      img {
+        height: 40px;
+        width: 40px;
       }
 
       &__vd {
@@ -258,6 +257,11 @@
     &__qr {
       position: absolute;
       left: 10px;
+
+      img {
+        height: 40px;
+        width: 40px;
+      }
 
       &__vd {
         bottom: unset;

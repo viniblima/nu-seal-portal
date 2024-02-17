@@ -49,10 +49,11 @@
             'sign-pdf__doc__qr__vu': form.controls['posicaoVertical'].value == 'up',
             'sign-pdf__doc__qr__vd': form.controls['posicaoVertical'].value == 'down',
           }">
-            <qrcode [qrdata]="qrLink" [allowEmptyString]="true"
+            <!-- <qrcode [qrdata]="qrLink" [allowEmptyString]="true"
               [ariaLabel]="'QR Code image with the following content...'" [cssClass]="'center'"
               [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [errorCorrectionLevel]="'M'" [imageHeight]="8"
-              [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'" [width]="5"></qrcode>
+              [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'" [width]="5"></qrcode> -->
+            <img [src]="qrLink" />
           </div>
           <div [ngClass]="{
             'sign-pdf__doc__image': true,
@@ -199,10 +200,11 @@
         'sign-pdf__hidden__qr__vu': form.controls['posicaoVertical'].value == 'up',
         'sign-pdf__hidden__qr__vd': form.controls['posicaoVertical'].value == 'down',
       }">
-        <qrcode [qrdata]="qrLink" [allowEmptyString]="true" [ariaLabel]="'QR Code image with the following content...'"
+        <!-- <qrcode [qrdata]="qrLink" [allowEmptyString]="true" [ariaLabel]="'QR Code image with the following content...'"
           [cssClass]="'center'" [colorDark]="'#000000ff'" [colorLight]="'#ffffffff'" [errorCorrectionLevel]="'M'"
           [imageHeight]="8" [imageWidth]="8" [margin]="4" [scale]="1" [title]="'A custom title attribute'" [width]="5">
-        </qrcode>
+        </qrcode> -->
+        <img [src]="qrLink" />
       </div>
       <div [ngClass]="{
         'sign-pdf__hidden__image': true,
