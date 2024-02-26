@@ -1,8 +1,14 @@
-<button (click)="click()" [ngClass]="{
-    'button': true,
-    'button__full': type == 'full',
-    'button__square': format == 'square',
-    'button__rounded': format == 'rounded'
-}" [disabled]="disabled" [color]="color" mat-raised-button>
-    <ng-content></ng-content>
+<button
+  (click)="click()"
+  [ngClass]="{
+    button: true,
+    button__full: type == 'full',
+    button__square: format == 'square',
+    button__rounded: format == 'rounded'
+  }"
+  [disabled]="disabled"
+  [color]="disabled ? '' : color"
+  mat-raised-button
+>
+  <ng-content></ng-content>
 </button>

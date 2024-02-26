@@ -27,9 +27,12 @@
         "pages": "Páginas",
         "view_page": "Visualizar página",
         "seal_type": "Tipo de selo",
+        "seal_image": "Imagem do selo",
         "select_img": "Selecionar a imagem",
         "applying_seal_on_page": "Aplicando selo na página",
-        "this_seal_only_will_be_valid_when_applyed": "Este selo será válido somente se for aplicado"
+        "this_seal_only_will_be_valid_when_applyed": "Este selo será válido somente se for aplicado",
+        "digital_seal": "Selo digital",
+        "seal_will_be_here": "O selo será colocado aqui. Selecione uma imagem para exibição do selo completo."
     },
     "seal": {
         "issued": "Emitido",

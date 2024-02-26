@@ -1,7 +1,6 @@
 @import "../../../variables.scss";
 
 .sign-pdf {
-  // max-height: calc(100vh - 48px);
   height: 105vh;
   overflow: hidden;
 
@@ -26,9 +25,7 @@
   }
 
   &__footer-mobile {
-    // height: 10vh;
-
-    @media (min-width:1025px) {
+    @media (min-width: 1025px) {
       display: none;
     }
   }
@@ -45,7 +42,6 @@
   &__drop {
     width: 450px;
     height: 200px;
-    // padding: 2rem;
     text-align: center;
     border: dashed 1px #979797;
     position: relative;
@@ -78,22 +74,15 @@
     h3 {
       font-size: 20px;
       font-weight: 600;
-      // color: $white;
     }
   }
 
   &__menu {
-    // padding: 16px;
-
     @media (max-width: 1024px) {
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
-      // display: none;
       form {
         display: flex;
         overflow-x: scroll;
-
-
       }
     }
 
@@ -102,7 +91,6 @@
         margin: 0 16px;
         min-width: 300px;
       }
-
     }
 
     &__divider {
@@ -113,9 +101,7 @@
       margin-bottom: 24px;
 
       @media (max-width: 1024px) {
-
         display: none;
-
       }
     }
   }
@@ -139,33 +125,108 @@
     justify-content: center;
     align-items: center;
 
-    &__qr {
-      position: absolute;
-      left: 10px;
+    &__viewer {
+      position: relative;
 
-      img {
-        height: 25px;
-        width: 25px;
-      }
-
-      &__vd {
-        bottom: unset;
-        top: 10px;
-      }
-
-      &__vu {
-        bottom: 10px;
+      &__relative {
+        ::ng-deep .ng2-pdf-viewer-container {
+          position: relative;
+        }
       }
     }
 
-    &__image {
-      position: absolute;
+    pdf-viewer {
+      height: fit-content;
+      display: flex !important;
+      width: fit-content;
+      justify-content: center;
+      align-items: center;
 
-      &__hr {
-        right: 40px;
-        left: unset;
+      .page {
+        padding: 0;
+      }
+    }
+
+    &__seal {
+      position: absolute;
+      width: 180px;
+      height: 100px;
+
+      @media (max-width: 1024px) {
+        width: 90px;
+        height: 50px;
       }
 
+      &__with-image {
+        &__head {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+
+          img {
+            &:first-child {
+              width: 110px;
+              height: 55px;
+
+              @media (max-width: 1024px) {
+                width: 55px;
+                height: 27.5px;
+              }
+            }
+
+            &:last-child {
+              width: 55px;
+              height: 55px;
+
+              @media (max-width: 1024px) {
+                width: 27.5px;
+                height: 27.5px;
+              }
+            }
+          }
+        }
+
+        &__footer {
+          p {
+            margin: 0;
+            font-size: 8px;
+            margin-top: 5px;
+
+            @media (max-width: 1024px) {
+              font-size: 4px;
+            }
+          }
+
+          span {
+            color: red;
+          }
+        }
+      }
+
+      &__placeholder {
+        background-color: #e2dfdf;
+        border: dashed 1px #979797;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        text-align: center;
+
+        p {
+          color: $white;
+          font-size: 10px;
+
+          @media (max-width: 1024px) {
+            font-size: 6px;
+          }
+        }
+      }
+
+      &__hr {
+        right: 20px;
+        left: unset;
+      }
 
       &__hc {
         right: 50%;
@@ -188,73 +249,6 @@
       &__vc {
         bottom: 50%;
       }
-
-      img {
-        height: 40px;
-
-        @media (max-width:1024px) {}
-      }
-
-      p {
-        font-size: 10px;
-        text-align: center;
-      }
-
-      text-align: center;
-    }
-
-
-    &__seal-txt {
-      position: absolute;
-
-      &__vu {
-        bottom: unset;
-        top: 20px;
-
-        @media (max-width: 1024px) {
-          top: 5px;
-        }
-      }
-
-      &__vd {
-        bottom: 20px;
-
-        @media (max-width: 1024px) {
-          bottom: 5px;
-        }
-      }
-
-      p {
-        font-size: 10px;
-        text-align: center;
-
-        @media (max-width: 1024px) {
-          font-size: 6px;
-        }
-      }
-    }
-
-    &__viewer {
-      position: relative;
-
-      &__relative {
-        ::ng-deep .ng2-pdf-viewer-container {
-          position: relative;
-        }
-      }
-    }
-
-    pdf-viewer {
-
-      height: fit-content;
-      display: flex !important;
-      width: fit-content;
-      justify-content: center;
-      align-items: center;
-
-      .page {
-        padding: 0;
-      }
     }
   }
 
@@ -266,33 +260,63 @@
     justify-content: center;
     align-items: center;
 
-    &__qr {
+    &__seal {
       position: absolute;
-      left: 10px;
+      width: 282px;
+      height: 160px;
 
-      img {
-        height: 90px;
-        width: 90px;
+      &__with-image {
+        &__head {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+
+          img {
+            &:first-child {
+              width: 170px;
+              height: 88px;
+            }
+
+            &:last-child {
+              width: 88px;
+              height: 88px;
+            }
+          }
+        }
+
+        &__footer {
+          p {
+            margin: 0;
+            font-size: 12px;
+            margin-top: 5px;
+          }
+
+          span {
+            color: red;
+          }
+        }
       }
 
-      &__vd {
-        bottom: unset;
-        top: 10px;
-      }
+      &__placeholder {
+        background-color: #e2dfdf;
+        border: dashed 1px #979797;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        text-align: center;
 
-      &__vu {
-        bottom: 10px;
+        p {
+          color: $white;
+          font-size: 13px;
+        }
       }
-    }
-
-    &__image {
-      position: absolute;
 
       &__hr {
-        right: 40px;
+        right: 30px;
         left: unset;
       }
-
 
       &__hc {
         right: 50%;
@@ -300,50 +324,26 @@
 
       &__hl {
         right: unset;
-        left: 45px;
+        left: 30px;
       }
 
       &__vu {
         bottom: unset;
-        top: 45px;
+        top: 30px;
       }
 
       &__vd {
-        bottom: 45px;
+        bottom: 30px;
       }
 
       &__vc {
         bottom: 50%;
-      }
-
-      img {
-        height: 60px;
-      }
-
-      text-align: center;
-    }
-
-    &__seal-txt {
-      position: absolute;
-
-      &__vu {
-        bottom: unset;
-        top: 20px;
-      }
-
-      &__vd {
-        bottom: 20px;
-      }
-
-      p {
-        font-size: 10px;
       }
     }
 
     &__viewer {
       position: relative;
       width: fit-content;
-
 
       &__relative {
         ::ng-deep .ng2-pdf-viewer-container {
@@ -364,10 +364,7 @@
       }
     }
 
-
-
     pdf-viewer {
-
       height: fit-content;
       display: flex !important;
       width: fit-content;
@@ -402,12 +399,6 @@
     mat-form-field {
       margin: 0 16px;
     }
-
-    // app-raised-button {
-    // &:last-child {
-    //     margin-left: 64px;
-    // }
-    // }
   }
 
   &__success {
@@ -418,27 +409,19 @@
       height: 80px;
       width: 80px;
     }
-
-    // p {
-    //   margin-bottom: 24px;
-    // }
   }
 
   &__footer {
-
     @media (max-width: 1024px) {
       display: none;
     }
 
     margin-top: 32px;
 
-
     p {
       color: $primary;
     }
   }
-
-
 
   mat-button-toggle-group {
     width: 100%;
@@ -495,8 +478,6 @@
         align-items: flex-start;
       }
 
-
-
       p {
         margin-left: 16px;
       }
@@ -521,7 +502,6 @@
     .col-4 {
       width: 100%;
       height: 30vh;
-      // display: none;
     }
 
     .row {

@@ -39,45 +39,57 @@ export class SignPdfComponent {
 
   subscriptionTipoSelo!: Subscription;
 
-  qrLink: string = "";
+  qrLink: string = '';
 
   form: FormGroup = new FormGroup({
     posicaoHorizontal: new FormControl('left', [Validators.required]),
     posicaoVertical: new FormControl('down', [Validators.required]),
     pagina: new FormControl(1, [Validators.required]),
-    tipoSelo: new FormControl("image", [Validators.required]),
-  })
+    tipoSelo: new FormControl('image', [Validators.required]),
+  });
 
   @ViewChild(PdfViewerComponent, { static: false }) pdfComponent:
     | PdfViewerComponent
     | undefined;
 
-  constructor(private uploadService: UploadService, private sealService: SealService) { }
-
+  constructor(
+    private uploadService: UploadService,
+    private sealService: SealService
+  ) {}
 
   ngOnDestroy(): void {
     this.subscriptionTipoSelo.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.subscriptionTipoSelo = this.form.get("tipoSelo")!.valueChanges.subscribe((data) => {
-      if (data == "text") {
-        this.form.get("posicaoHorizontal")!.disable();
-        this.form.controls["posicaoVertical"].setValue("down");
-      } else {
-        this.form.get("posicaoHorizontal")!.enable();
-      }
-    });
+    this.subscriptionTipoSelo = this.form
+      .get('tipoSelo')!
+      .valueChanges.subscribe((data) => {
+        if (data == 'text') {
+          this.form.get('posicaoHorizontal')!.disable();
+          this.form.controls['posicaoVertical'].setValue('down');
+        } else {
+          this.form.get('posicaoHorizontal')!.enable();
+        }
+      });
     this.sealService.getNumber().then((data: any) => {
       this.seal = new Seal(data.seal);
-      this.sealText = `Este documento utiliza o selo digital nº ${this.seal.numSealText} emitido em ${Date.now().toLocaleString()}. Para verificar autenticidade acesso site ${window.location.href.replace("sign-pdf", `certified/${this.seal.numSeal}`)} informe o número do selo`;
+      this.sealText = `emitido em ${new Date().toLocaleDateString()}. Para verificar autenticidade acesso site ${window.location.href.replace(
+        'sign-pdf',
+        `certified/${this.seal.numSeal}`
+      )} informe o número do selo`;
 
-      qrcode.toDataURL(`${window.location.href.replace("sign-pdf", `certified/${this.seal.numSeal}`)}`, (err, url) => {
-        this.qrLink = url;
-      })
+      qrcode.toDataURL(
+        `${window.location.href.replace(
+          'sign-pdf',
+          `certified/${this.seal.numSeal}`
+        )}`,
+        (err, url) => {
+          this.qrLink = url;
+        }
+      );
       this.initializingPage = false;
-    })
-
+    });
   }
   onFileDropped(event: FileList) {
     this.renderDoc(event);
@@ -94,21 +106,17 @@ export class SignPdfComponent {
       this.sealImageName = event.target.files[0].name;
     };
     this.havePdf = true;
-    reader.readAsDataURL(event.target.files[0])
-    // reader.readAsArrayBuffer(event.target.files[0]);
+    reader.readAsDataURL(event.target.files[0]);
   }
 
   afterLoadComplete(pdf: PDFDocumentProxy) {
-
     this.pages = [];
     this.totalPages = pdf.numPages;
     this.positionPdfViewerRelative = true;
-
   }
 
   afterHiddenLoadComplete(pdf: PDFDocumentProxy) {
     this.positionPdfHiddenRelative = true;
-
   }
 
   pageRendered() {
@@ -127,7 +135,6 @@ export class SignPdfComponent {
   }
 
   public async download() {
-
     const list = document.querySelectorAll('.sign-pdf__hidden__viewer');
     this.loading = true;
     for (let index = 0; index < list.length; index++) {
@@ -163,8 +170,6 @@ export class SignPdfComponent {
         this.loading = false;
       }
     );
-
-
   }
 
   reset(): void {
@@ -180,14 +185,14 @@ export class SignPdfComponent {
     this.sealText = '';
     this.sealService.getNumber().then((data: any) => {
       this.seal = new Seal(data.seal);
-      this.sealText = `Este documento utiliza o selo digital nº ${this.seal.numSealText} emitido em ${Date.now().toLocaleString()}. Para verificar autenticidade acesso site https://nu-seal-portal-92c11adb828d.herokuapp.com/sign-pdf informe o número do selo`;
+      this.sealText = `Este documento utiliza o selo digital nº ${
+        this.seal.numSealText
+      } emitido em ${new Date().toLocaleDateString()}. Para verificar autenticidade acesso site https://nu-seal-portal-92c11adb828d.herokuapp.com/sign-pdf informe o número do selo`;
       this.initializingPage = false;
-    })
+    });
   }
 
-  private getCanvasToDownload(isFirst: boolean, canvas: any,) {
-
-
+  private getCanvasToDownload(isFirst: boolean, canvas: any) {
     let ctx = canvas.getContext('2d');
     ctx.scale(6, 6);
     let image = canvas.toDataURL('image/png').replace('image/png', 'image/png');
@@ -195,16 +200,19 @@ export class SignPdfComponent {
     const imgProps = this.pdf.getImageProperties(image);
     if (isFirst) {
       this.pdf = new jsPDF({
-        orientation: imgProps.height < imgProps.width ? 'landscape' : 'portrait'
+        orientation:
+          imgProps.height < imgProps.width ? 'landscape' : 'portrait',
       });
     } else {
-      this.pdf.addPage('a4', imgProps.height < imgProps.width ? 'landscape' : 'portrait');
+      this.pdf.addPage(
+        'a4',
+        imgProps.height < imgProps.width ? 'landscape' : 'portrait'
+      );
     }
     const pdfWidth = this.pdf.internal.pageSize.getWidth();
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
     this.pdf.addImage(image, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
   }
 
   public previous() {
