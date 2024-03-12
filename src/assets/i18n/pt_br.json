@@ -40,6 +40,7 @@
         "invalid": "Inválido",
         "on": "em",
         "validated": "Validado",
-        "num_or_id_seal": "Número/ ID do selo"
+        "num_or_id_seal": "Número/ ID do selo",
+        "seal_text": "Texto do selo"
     }
 }

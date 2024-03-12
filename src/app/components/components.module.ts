@@ -42,7 +42,7 @@ import { MatInputModule } from '@angular/material/input';
     MatTabsModule,
     MatButtonToggleModule,
     MatCardModule,
-    MatInputModule
+    MatInputModule,
   ],
   exports: [
     MatSidenavModule,
@@ -62,8 +62,7 @@ import { MatInputModule } from '@angular/material/input';
     MatTabsModule,
     MatCardModule,
     MatButtonToggleModule,
-
-    MatInputModule
+    MatInputModule,
   ],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

@@ -66,17 +66,29 @@
           <div
             class="sign-pdf__doc__seal"
             [ngClass]="{
-            'sign-pdf__doc__seal': true,
-            'sign-pdf__doc__seal__hr': form.controls['posicaoHorizontal'].value == 'right',
-            'sign-pdf__doc__seal__hl': form.controls['posicaoHorizontal'].value == 'left',
-            'sign-pdf__doc__seal__hc': form.controls['posicaoHorizontal'].value == 'center',
-    
-            'sign-pdf__doc__seal__vu': form.controls['posicaoVertical'].value == 'up',
-            'sign-pdf__doc__seal__vd': form.controls['posicaoVertical'].value == 'down',
-            'sign-pdf__doc__seal__vc': form.controls['posicaoVertical'].value == 'center',
-          }"
+              'sign-pdf__doc__seal': true,
+              'sign-pdf__doc__seal__hr':
+                form.controls['posicaoHorizontal'].value == 'right',
+              'sign-pdf__doc__seal__hl':
+                form.controls['posicaoHorizontal'].value == 'left',
+              'sign-pdf__doc__seal__hc':
+                form.controls['posicaoHorizontal'].value == 'center',
+
+              'sign-pdf__doc__seal__vu':
+                form.controls['posicaoVertical'].value == 'up',
+              'sign-pdf__doc__seal__vd':
+                form.controls['posicaoVertical'].value == 'down',
+              'sign-pdf__doc__seal__vc':
+                form.controls['posicaoVertical'].value == 'center',
+              'sign-pdf__doc__seal__text':
+                form.controls['tipoSelo'].value == 'text'
+            }"
           >
-            @if(sealSrc == '') {
+            @if(form.controls['tipoSelo'].value == 'text') {
+            <div class="sign-pdf__doc__seal__txt-applied">
+              <p>{{ sealText }}</p>
+            </div>
+            } @else { @if(sealSrc == '') {
             <div class="sign-pdf__doc__seal__placeholder">
               <p>{{ "pdf.seal_will_be_here" | translate }}</p>
             </div>
@@ -93,7 +105,7 @@
                 </p>
               </div>
             </div>
-            }
+            } }
           </div>
         </div>
       </div>
@@ -147,8 +159,55 @@
             </mat-select>
           </mat-form-field>
         </div>
-
         <div class="sign-pdf__menu__section">
+          <mat-button-toggle-group name="fontStyle" formControlName="tipoSelo">
+            <mat-button-toggle value="image">{{
+              "general.image" | translate
+            }}</mat-button-toggle>
+            <mat-button-toggle value="text">{{
+              "general.text" | translate
+            }}</mat-button-toggle>
+          </mat-button-toggle-group>
+          <div
+            class="sign-pdf__img-seal"
+            *ngIf="form.controls['tipoSelo'].value == 'image'"
+          >
+            <div class="sign-pdf__img-seal__img">
+              <app-raised-button format="square" color="accent">
+                <input
+                  type="file"
+                  #fileDropRef
+                  id="fileSealDropRef"
+                  (change)="sealBrowsehandler($event)"
+                />
+                <label for="fileSealDropRef">{{
+                  "pdf.select_img" | translate
+                }}</label>
+              </app-raised-button>
+
+              @if (sealSrc != "") {
+              <p>{{ sealImageName }}</p>
+              }
+            </div>
+          </div>
+
+          <div
+            class="sign-pdf__img-seal__text"
+            *ngIf="form.controls['tipoSelo'].value == 'text'"
+          >
+            <mat-form-field appearance="outline" class="col-12">
+              <mat-label>{{ "seal.seal_text" | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="textoSelo"
+                type="text"
+                maxlength="130"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- <div class="sign-pdf__menu__section">
           <h4>
             {{ "pdf.seal_image" | translate }}
           </h4>
@@ -171,14 +230,16 @@
               }
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="sign-pdf__footer">
           <app-raised-button
             format="square"
             (onClick)="download()"
             color="accent"
-            [disabled]="sealSrc == ''"
+            [disabled]="
+              form.controls['tipoSelo'].value == 'image' && sealSrc == ''
+            "
           >
             <p>{{ "pdf.apply_seal" | translate }}</p>
           </app-raised-button>
@@ -224,17 +285,29 @@
       <div
         class="sign-pdf__hidden__seal"
         [ngClass]="{
-            'sign-pdf__hidden__seal': true,
-            'sign-pdf__hidden__seal__hr': form.controls['posicaoHorizontal'].value == 'right',
-            'sign-pdf__hidden__seal__hl': form.controls['posicaoHorizontal'].value == 'left',
-            'sign-pdf__hidden__seal__hc': form.controls['posicaoHorizontal'].value == 'center',
-    
-            'sign-pdf__hidden__seal__vu': form.controls['posicaoVertical'].value == 'up',
-            'sign-pdf__hidden__seal__vd': form.controls['posicaoVertical'].value == 'down',
-            'sign-pdf__hidden__seal__vc': form.controls['posicaoVertical'].value == 'center',
-          }"
+          'sign-pdf__hidden__seal': true,
+          'sign-pdf__hidden__seal__hr':
+            form.controls['posicaoHorizontal'].value == 'right',
+          'sign-pdf__hidden__seal__hl':
+            form.controls['posicaoHorizontal'].value == 'left',
+          'sign-pdf__hidden__seal__hc':
+            form.controls['posicaoHorizontal'].value == 'center',
+
+          'sign-pdf__hidden__seal__vu':
+            form.controls['posicaoVertical'].value == 'up',
+          'sign-pdf__hidden__seal__vd':
+            form.controls['posicaoVertical'].value == 'down',
+          'sign-pdf__hidden__seal__vc':
+            form.controls['posicaoVertical'].value == 'center',
+          'sign-pdf__hidden__seal__text':
+            form.controls['tipoSelo'].value == 'text'
+        }"
       >
-        @if(sealSrc == '') {
+        @if(form.controls['tipoSelo'].value == 'text') {
+        <div class="sign-pdf__hidden__seal__txt-applied">
+          <p>{{ sealText }}</p>
+        </div>
+        } @else { @if(sealSrc == '') {
         <div class="sign-pdf__hidden__seal__placeholder">
           <p>{{ "pdf.seal_will_be_here" | translate }}</p>
         </div>
@@ -251,7 +324,7 @@
             </p>
           </div>
         </div>
-        }
+        } }
       </div>
     </div>
     }

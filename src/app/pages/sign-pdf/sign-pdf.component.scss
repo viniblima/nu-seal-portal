@@ -120,7 +120,7 @@
   &__doc {
     margin-top: 16px;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,7 +153,7 @@
       height: 100px;
 
       @media (max-width: 1024px) {
-        width: 90px;
+        width: 75px;
         height: 50px;
       }
 
@@ -249,6 +249,27 @@
       &__vc {
         bottom: 50%;
       }
+
+      &__text {
+        width: 100%;
+        transform: rotate(270deg);
+        height: fit-content;
+        right: calc(-50% + 8px);
+
+        @media (max-width: 1024px) {
+          right: calc(-50% + 4px);
+        }
+      }
+
+      &__txt-applied {
+        p {
+          font-size: 8px;
+
+          @media (max-width: 1024px) {
+            font-size: 4px;
+          }
+        }
+      }
     }
   }
 
@@ -338,6 +359,27 @@
 
       &__vc {
         bottom: 50%;
+      }
+
+      &__text {
+        width: 100%;
+        transform: rotate(270deg);
+        height: fit-content;
+        right: calc(-50% + 12px);
+
+        @media (max-width: 1024px) {
+          right: calc(-50% + 10px);
+        }
+      }
+
+      &__txt-applied {
+        p {
+          font-size: 12.5px;
+
+          // @media (max-width: 1024px) {
+          //   font-size: 13px;
+          // }
+        }
       }
     }
 
@@ -484,6 +526,8 @@
     }
 
     &__text {
+      margin-top: 16px;
+
       @media (max-width: 1024px) {
         p {
           margin-top: 12px;

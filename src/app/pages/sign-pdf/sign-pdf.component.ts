@@ -8,6 +8,7 @@ import { PagePdfInterface, Seal } from '../../models';
 import { SealService } from '../../services/seal.service';
 import { Subscription } from 'rxjs';
 import * as qrcode from 'qrcode';
+import { environment } from '../../environment/environment';
 
 @Component({
   selector: 'app-sign-pdf',
@@ -26,6 +27,7 @@ export class SignPdfComponent {
   positionPdfViewerRelative: boolean = false;
   positionPdfHiddenRelative: boolean = false;
   indexPage: number = 0;
+  haveSealImage: boolean = false;
 
   sealSrc: string = '';
   sealImageName: string = '';
@@ -38,6 +40,7 @@ export class SignPdfComponent {
   sealText: string = '';
 
   subscriptionTipoSelo!: Subscription;
+  subscriptionTextoSelo!: Subscription;
 
   qrLink: string = '';
 
@@ -46,6 +49,7 @@ export class SignPdfComponent {
     posicaoVertical: new FormControl('down', [Validators.required]),
     pagina: new FormControl(1, [Validators.required]),
     tipoSelo: new FormControl('image', [Validators.required]),
+    textoSelo: new FormControl(''),
   });
 
   @ViewChild(PdfViewerComponent, { static: false }) pdfComponent:
@@ -59,6 +63,7 @@ export class SignPdfComponent {
 
   ngOnDestroy(): void {
     this.subscriptionTipoSelo.unsubscribe();
+    this.subscriptionTextoSelo.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -66,18 +71,38 @@ export class SignPdfComponent {
       .get('tipoSelo')!
       .valueChanges.subscribe((data) => {
         if (data == 'text') {
+          this.form.controls['posicaoVertical'].setValue('center');
+          this.form.controls['posicaoHorizontal'].setValue('right');
           this.form.get('posicaoHorizontal')!.disable();
-          this.form.controls['posicaoVertical'].setValue('down');
+          this.form.get('posicaoVertical')!.disable();
         } else {
           this.form.get('posicaoHorizontal')!.enable();
+          this.form.get('posicaoVertical')!.enable();
         }
       });
-    this.sealService.getNumber().then((data: any) => {
+
+    this.subscriptionTextoSelo = this.form
+      .get('textoSelo')!
+      .valueChanges.subscribe((data) => {
+        this.sealText = data;
+      });
+    this.sealService.getNumber().then(async (data: any) => {
       this.seal = new Seal(data.seal);
-      this.sealText = `emitido em ${new Date().toLocaleDateString()}. Para verificar autenticidade acesso site ${window.location.href.replace(
-        'sign-pdf',
-        `certified/${this.seal.numSeal}`
-      )} informe o número do selo`;
+
+      const resultSealImage: any = await this.uploadService.getSealCreated();
+      this.haveSealImage = resultSealImage.result != null;
+
+      if (this.haveSealImage) {
+        // this.sealSrc = `${environment.url}/portal/upload/${resultSealImage.result.fileName}`;
+        this.sealImageName = resultSealImage.result.fileName;
+      }
+
+      this.form.controls['textoSelo'].setValue(
+        `Emitido em ${new Date().toLocaleDateString()}. Para verificar autenticidade acesso site ${window.location.href.replace(
+          'sign-pdf',
+          `certified/${this.seal.numSeal}`
+        )} informe o número do selo`
+      );
 
       qrcode.toDataURL(
         `${window.location.href.replace(
@@ -101,9 +126,12 @@ export class SignPdfComponent {
 
   sealBrowsehandler(event: any) {
     const reader = new FileReader();
-    reader.onload = (e: any) => {
+    reader.onload = async (e: any) => {
       this.sealSrc = e.target.result;
       this.sealImageName = event.target.files[0].name;
+      const result = await this.uploadService.uploadSealImage(
+        event.target.files[0]
+      );
     };
     this.havePdf = true;
     reader.readAsDataURL(event.target.files[0]);
@@ -153,10 +181,9 @@ export class SignPdfComponent {
 
     await this.uploadService.upload(blobPDF, this.seal.id).then(
       async (data: any) => {
-        const file = data.list[0].signed;
+        const file = data.result.signed;
 
         const resultFile: any = await this.uploadService.getFile(file.fileName);
-
         this.havePdf = false;
         this.success = true;
         this.loading = false;
@@ -165,6 +192,10 @@ export class SignPdfComponent {
         a.href = URL.createObjectURL(resultFile);
         a.setAttribute('download', file.fileName);
         a.click();
+
+        const resultExclude = await this.uploadService.removeFile(
+          file.fileName
+        );
       },
       (err) => {
         this.loading = false;
